@@ -65,7 +65,8 @@ SRC = ft_atoi.c \
 	   ft_memalloc.c \
 	   ft_putendl_fd.c \
 	   ft_putendl.c \
-	   ft_putnbr_fd.c \
+		ft_sqrt.c \
+		ft_putnbr_fd.c \
 	   ft_putchar_fd.c \
 	   ft_putstr_fd.c \
 	   ft_segcount.c \

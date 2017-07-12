@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pow.c                                           :+:      :+:    :+:   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acorbeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/05 02:46:02 by acorbeau          #+#    #+#             */
-/*   Updated: 2017/07/12 04:57:02 by acorbeau         ###   ########.fr       */
+/*   Created: 2017/07/12 04:51:12 by acorbeau          #+#    #+#             */
+/*   Updated: 2017/07/12 04:51:16 by acorbeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_pow(int base, int exp)
+#include <unistd.h>
+#include <stdio.h>
+
+int	ft_sqrt(int nb)
 {
-	int result = 1;
-	while (exp)
+	int i;
+	int sq;
+
+	i = 1;
+	sq = 1;
+	if(nb == 0)
+		return(0);
+	while (i * i < nb)
 	{
-		if (exp & 1)
-			result *= base;
-		exp >>= 1;
-		base *= base;
+		i++;
 	}
-	return result;
+	if ((nb % i) == 0)
+		return (i);
+	else
+		return(0);
 }

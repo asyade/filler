@@ -19,7 +19,7 @@ int	can_put(t_filler *filler, int x, int y)
 	int	col;
 
 
-	if (x < 0 || y < 0 || x + filler->piece->width > filler->width || y + filler->piece->height > filler->height)
+	if (x < 0 || y < 0 || x + filler->piece->width > filler->map->width || y + filler->piece->height > filler->map->height)
 		return (0);
 	col = 0;
 	i = -1;
@@ -28,11 +28,11 @@ int	can_put(t_filler *filler, int x, int y)
 		j = -1;
 		while (++j < filler->piece->width)
 		{
-			if (filler->piece->[i][j] == '.')
+			if (filler->piece->data[i][j] == '.')
 				continue ;
-			if (is_player(filler->map->map[i + y][j + x]) > 0)
+			if (is_player(filler, filler->map->map[i + y][j + x]) > 0)
 				col++;
-			else if (is_player(filler->map->map[i + y][j + x]) < 0)
+			else if (is_player(filler, filler->map->map[i + y][j + x]) < 0)
 				return (0);
 			else if (filler->map->map[i + y][j + x] != '.')
 				return (0);

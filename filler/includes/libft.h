@@ -6,7 +6,7 @@
 /*   By: acorbeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 17:39:11 by acorbeau          #+#    #+#             */
-/*   Updated: 2017/07/05 02:50:52 by acorbeau         ###   ########.fr       */
+/*   Updated: 2017/07/12 04:55:39 by acorbeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_sqrt(int nb);
 void				ft_perror(char *str, int flags);
 void				ft_errset(char *name);
 void				ft_bzero(void *s, size_t n);
