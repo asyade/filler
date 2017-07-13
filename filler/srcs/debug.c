@@ -1,5 +1,7 @@
 #include "filler.h"
 
+
+
 void	fl_log(char *str)
 {
 	int	fd;

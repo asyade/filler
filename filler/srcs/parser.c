@@ -6,7 +6,7 @@ void		reset_map(t_filler *fill, int height, int width)
 	{
 		while (fill->map->height--)
 		{
-			free(fill->map->map[height]);
+			free(fill->map->map[fill->map->height]);
 		}
 		free(fill->map);
 	}
@@ -29,6 +29,7 @@ static int	parse_player(t_filler **filler, char *line)
 	(*filler)->player = (*line++ == '1') ? 'o' : 'x';
 	if (!ft_strnequ(line, " : [", 4))
 		return (-1);
+	fl_log("Player parsed");
 	return (1);
 }
 
@@ -86,7 +87,7 @@ int		reset_piece(t_filler *filler, int height, int width)
 {
 	if (filler->piece)
 	{
-		while (filler->piece->height--)
+		while (--filler->piece->height)
 			free(filler->piece->data[filler->piece->height]);
 		free(filler->piece->data);
 	}
@@ -116,6 +117,7 @@ static int	parse_piece(t_filler *filler, char *line)
 {
 	int	size[2];
 	char	*s;
+	int		i;
 
 	fl_log("Parsing piece...");
 	if (!line || !*line || !ft_strnequ(line, "Piece ", 6))
@@ -128,11 +130,12 @@ static int	parse_piece(t_filler *filler, char *line)
 	if (!reset_piece(filler, size[0], size[1]))
 		return (0);
 	s = NULL;
-	while (size[0]--)
+	i = -1;
+	while (++i < size[0])
 	{
 		if (get_next_line(0, &s) <= 0)
 			return (0);
-		filler->piece->data[size[0]] = s;
+		filler->piece->data[i] = s;
 	}
 	fl_log("Piece parsed !");
 	debug_piece(filler->piece);
@@ -152,7 +155,6 @@ int		fl_parse(t_filler **filler)
 		return (-1);
 	if ((len = get_next_line(0, &line)) <= 0)
 	{
-		fl_log("Failed to get next line !");
 		return (-1);
 	}
 	if (!(*filler)->nb)

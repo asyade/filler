@@ -132,6 +132,8 @@ void				ft_lstpop(t_list **root);
 void				ft_lstswap(t_list *lst1, t_list *lst2);
 void				ft_lstsort(t_list *root, int (*f)(t_list *, t_list *));
 void				ft_lstrev(t_list **alst);
+t_list				*ft_lstpushsort(t_list **root, t_list *elem,
+		int (*cmp)(t_list *, t_list *));
 
 char				*ft_strjoin_at(char *s1, char *s2, int i);
 int					ft_sc(char *str, char c);

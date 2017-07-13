@@ -30,31 +30,70 @@ int	can_put(t_filler *filler, int x, int y)
 		{
 			if (filler->piece->data[i][j] == '.')
 				continue ;
-			if (is_player(filler, filler->map->map[i + y][j + x]) > 0)
+			if (is_player(filler, filler->map->map[i + y][j + x]) == 1)
 				col++;
-			else if (is_player(filler, filler->map->map[i + y][j + x]) < 0)
-				return (0);
-			else if (filler->map->map[i + y][j + x] != '.')
+			else if (is_player(filler, filler->map->map[i + y][j + x]) == -1 || col > 1)
 				return (0);
 		}
 	}
-	return (col == 1);
+	return (col == 1 ? 1 : 0);
 }
 
-void	put_piece(t_filler *filler)
-{
-	int	i;
-	char	*fptr;
 
-	i = -1;
-	fl_log("Looking fors place ...");
-	while (++i < filler->map->height)
+t_list	*get_pos_abs(t_filler *filler, int x, int y)
+{
+	t_absis	*ret;
+	t_absis	*tmp;
+	int		pcx;
+	int		pcy;
+
+	if (!(ret = malloc(sizeof(t_absis))))
+		return (NULL);
+	ret->a[0] = x;
+	ret->a[1] = y;
+	ret->dist = LIMITS_INT_MAX;
+	pcy = -1;
+	while (++pcy < filler->piece->height)
 	{
-		if ((fptr = ft_strchr(filler->map->map[i], filler->player)) || (fptr = ft_strchr(filler->map->map[i], ft_toupper(filler->player))))
+		pcx = -1;
+		while (++pcx < filler->piece->width)
 		{
-			fl_log("Put piece ...");
-			printf("%d %d\n", (int)(fptr - ft_strlen(filler->map->map[i])), i);//todo replace with ft_printf
-			return ;
+
+			if (filler->piece->data[pcy][pcx] == '.')
+				continue ;
+			tmp = get_abs(filler, x + pcx, y + pcy);
+			if (tmp->dist > ret->dist)
+				continue ;
+			ret->dist = tmp->dist;
+			ret->b[0] = tmp->b[0];
+			ret->b[1] = tmp->b[1];
+			free(tmp);
 		}
 	}
+	return (ft_lstcreate(ret, sizeof(t_absis *)));
+}
+
+t_list	*get_positions(t_filler *filler, int x, int y)
+{
+	int		px;
+	int		py;
+	t_list	*ret;
+
+	ret = NULL;
+	py = (y + 1) - filler->piece->height;
+	while ((py - y) < filler->piece->height * 2)
+	{
+		px = x - filler->piece->width + 1;
+		while ((px - x) < filler->piece->width * 2)
+		{
+			if (!(px < 0 || py < 0 ||
+				px + filler->piece->width > filler->map->width ||
+				py + filler->piece->height > filler->map->height) &&
+				can_put(filler, px, py))
+					ft_lstpushsort(&ret, get_pos_abs(filler, px, py), &cmp_dist);
+			px++;
+		}
+		py++;
+	}
+	return (ret);
 }

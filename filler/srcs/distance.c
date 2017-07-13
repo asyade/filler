@@ -12,14 +12,14 @@
 
 #include "filler.h"
 
-int		get_dist(int xa, int ya, int xb, int yb)
+int		get_dist(int x1, int y1, int x2, int y2)
 {
-	int	pa;
-	int	pb;
+	int	dist;
+	int distancex;
+	int distancey;
 
-	pa = ft_pow(xb - xa, 2);
-	pb = ft_pow(yb - ya, 2);
-	return (ft_sqrt(pa + pb));
+	distancex = (x2 - x1) * (x2 - x1);
+	distancey = (y2 - y1) * (y2 - y1);
+    int distance = distancex + distancey;
+	return ((int)distance);
 }
-
-

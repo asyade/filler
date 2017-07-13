@@ -17,6 +17,7 @@ SRC = ft_atoi.c \
 	   ft_ispunct.c \
 	   ft_isascii.c \
 	   ft_wstrlen.c \
+	   ft_lstpushsort.c \
 	   ft_lstrev.c \
 	   ft_strsub.c \
 	   ft_isdigit.c \
