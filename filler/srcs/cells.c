@@ -12,6 +12,7 @@ int		cmp_dist(t_list *la, t_list *lb)
 
 int		has_free_neigbors(t_filler *f, int x, int y)
 {
+	return (1);
 	if (x - 1 >= 0 && x - 1 < f->map->width && y >= 0 && y < f->map->height && f->map->map[y][x - 1] == '.')
 		return (1);
 	if (x + 1 >= 0 && x + 1 < f->map->width && y >= 0 && y < f->map->height && f->map->map[y][x + 1] == '.')
