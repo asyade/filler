@@ -8,9 +8,9 @@ void		reset_map(t_filler *fill, int height, int width)
 		{
 			free(fill->map->map[fill->map->height]);
 		}
-		free(fill->map);
+		free(fill->map->map);
 	}
-	if (!(fill->map = ft_memalloc(sizeof(t_map))))
+	else if (!(fill->map = ft_memalloc(sizeof(t_map))))
 		return ;
 	fill->map->map = ft_memalloc(sizeof(char *) * height);
 	fill->map->height = height;
@@ -53,17 +53,6 @@ static int	parse_map_cells(t_filler *filler)
 	return (1);
 }
 
-void 	db_map(t_map *map)
-{
-	int i;
-
-	i = 0;
-	while (i < map->height)
-	{
-		fl_log(map->map[i++]);
-	}
-}
-
 static int	parse_map(t_filler *filler, char *line)
 {
 	fl_log("Parsing map...");
@@ -79,7 +68,6 @@ static int	parse_map(t_filler *filler, char *line)
 		return (0);
 	size[1] = ft_atoi(line);
 	reset_map(filler, size[0], size[1]);
-	fl_log("Map parsed !");
 	return (parse_map_cells(filler));
 }
 
@@ -144,52 +132,41 @@ static int	parse_piece(t_filler *filler, char *line)
 
 int		fl_parse(t_filler **filler)
 {
-	int	len;
+	int		len;
 	char	*line;
-	int	ret;
+	int		ret;
 
 	ret = -1;
 	line = NULL;
-	fl_log(line);
 	if (!*filler && !(*filler = ft_memalloc(sizeof(t_filler))))
 		return (-1);
 	if ((len = get_next_line(0, &line)) <= 0)
 	{
+		free(*filler);
+		*filler = NULL;
 		return (-1);
 	}
 	if (!(*filler)->nb)
 	{
 		if (parse_player(filler, line))
-			return (1);
+			ret = 1;
 		else
-		{
-			fl_log("Can't parse player !");
-			return (-1);
-		}
+			ret = -1;
 	}
-	if (ft_strnequ(line, "Plateau ", 8))
+	else if (ft_strnequ(line, "Plateau ", 8))
 	{
 		if (parse_map(*filler, line))
-		{
-			db_map((*filler)->map);
-			return (1);
-		}
+			ret = 1;
 		else
-		{
-			fl_log("Can't parse map");
-			return (-1);
-		}
+			ret = -1;
 	}
-	if (ft_strnequ(line, "Piece ", 6))
+	else if (ft_strnequ(line, "Piece ", 6))
 	{
 		if (parse_piece(*filler, line))
-			return (1);
+			ret = 1;
 		else
-		{
-			fl_log("Can't parse piece");
-			return (-1);
-		}
+			ret = -1;
 	}
-	free(line);
-	return (-1);
+	ft_strdel(&line);
+	return (ret);
 }

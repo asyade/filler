@@ -42,7 +42,7 @@ void				fl_log(char *str);
 t_list				*get_positions(t_filler *filler, int x, int y);
 int					cmp_dist(t_list *la, t_list *lb);
 void				scale_piece(t_piece *p);
-
+int					has_free_neigbors(t_filler *f, int x, int y);
 int					get_dist(int xa, int ya, int xb, int yb);
 t_absis				*get_abs(t_filler *f, int x, int y);
 t_list				*get_all_abs(t_filler *f);

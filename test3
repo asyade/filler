@@ -1,0 +1,1 @@
+rm debug.log; cd filler && ./debug.sh && cd .. && ./filler_vm -f maps/map03 -p1 players/jclerc.filler -p2 filler/acorbeau.filler

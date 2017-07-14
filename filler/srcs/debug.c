@@ -4,6 +4,8 @@
 
 void	fl_log(char *str)
 {
+	(void)str;
+	return ;
 	int	fd;
 
 	if ((fd = open("debug.log", O_CREAT | O_RDWR | O_APPEND, S_IRUSR | S_IWUSR)) == -1)

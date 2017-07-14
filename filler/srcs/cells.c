@@ -12,13 +12,13 @@ int		cmp_dist(t_list *la, t_list *lb)
 
 int		has_free_neigbors(t_filler *f, int x, int y)
 {
-	if (x - 1 >= 0 && f->map->map[y][x - 1] == '.')
+	if (x - 1 >= 0 && x - 1 < f->map->width && y >= 0 && y < f->map->height && f->map->map[y][x - 1] == '.')
 		return (1);
-	if (x + 1 < f->map->map[y][x + 1] == '.')
+	if (x + 1 >= 0 && x + 1 < f->map->width && y >= 0 && y < f->map->height && f->map->map[y][x + 1] == '.')
 		return (1);
-	if (y - 1 >= 0 && f->map->map[y - 1][x] == '.')
+	if (y - 1 >= 0 && y - 1 < f->map->height && x >= 0 && x < f->map->width && f->map->map[y - 1][x] == '.')
 		return (1);
-	if (y + 1 < f->map->height && f->map->map[y + 1][x] == '.')
+	if (y + 1 >= 0 && y + 1 < f->map->height && x >= 0 && x < f->map->width && f->map->map[y + 1][x] == '.')
 		return (1);
 	return (0);
 }
@@ -34,6 +34,8 @@ t_absis	*get_abs(t_filler *f, int x, int y)
 	if (!(ret = malloc(sizeof(t_absis))))
 		return (NULL);
 	ret->dist = LIMITS_INT_MAX;
+	ret->a[0] = x;
+	ret->a[1] = y;
 	while (++py < f->map->height)
 	{
 		px = -1;
@@ -45,8 +47,6 @@ t_absis	*get_abs(t_filler *f, int x, int y)
 				continue ;
 			if (ret->dist < (dst = get_dist(x, y, px, py)))
 				continue ;
-			ret->a[0] = x;
-			ret->a[1] = y;
 			ret->dist = dst;
 			ret->b[0] = px;
 			ret->b[1] = py;

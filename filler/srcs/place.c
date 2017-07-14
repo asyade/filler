@@ -18,9 +18,6 @@ int	can_put(t_filler *filler, int x, int y)
 	int	j;
 	int	col;
 
-
-	if (x < 0 || y < 0 || x + filler->piece->width > filler->map->width || y + filler->piece->height > filler->map->height)
-		return (0);
 	col = 0;
 	i = -1;
 	while (++i < filler->piece->height)
@@ -30,8 +27,12 @@ int	can_put(t_filler *filler, int x, int y)
 		{
 			if (filler->piece->data[i][j] == '.')
 				continue ;
+			if (i + j >= filler->map->width || y + i >= filler->map->height || y + i < 0 || x + j < 0)
+				return (0);
 			if (is_player(filler, filler->map->map[i + y][j + x]) == 1)
 				col++;
+			if (col > 1)
+				return (0);
 			else if (is_player(filler, filler->map->map[i + y][j + x]) == -1 || col > 1)
 				return (0);
 		}
@@ -58,7 +59,6 @@ t_list	*get_pos_abs(t_filler *filler, int x, int y)
 		pcx = -1;
 		while (++pcx < filler->piece->width)
 		{
-
 			if (filler->piece->data[pcy][pcx] == '.')
 				continue ;
 			tmp = get_abs(filler, x + pcx, y + pcy);
@@ -86,10 +86,7 @@ t_list	*get_positions(t_filler *filler, int x, int y)
 		px = x - filler->piece->width + 1;
 		while ((px - x) < filler->piece->width * 2)
 		{
-			if (!(px < 0 || py < 0 ||
-				px + filler->piece->width > filler->map->width ||
-				py + filler->piece->height > filler->map->height) &&
-				can_put(filler, px, py))
+			if (has_free_neigbors(filler, px, py) && can_put(filler, px, py))
 					ft_lstpushsort(&ret, get_pos_abs(filler, px, py), &cmp_dist);
 			px++;
 		}
