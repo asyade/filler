@@ -2,6 +2,8 @@
 #include "fcntl.h"
 #include <stdio.h>
 
+//TODO prendre la meilleur position par raport au dernier placement ennemie
+
 void	free_filler(t_filler *filler)
 {
 	if (!filler)
@@ -30,17 +32,20 @@ int	main(int ac, char **av)
 	t_list		*lst;
 	filler = NULL;
 	t_list		*pos;
+	t_list		*fptr;
 	char		msg[10000];
 	int			turn;
 	int			done;
 
 	turn = 1;
+	filler = ft_memalloc(sizeof(t_filler));
 	while (fl_parse(&filler) > 0)
 	{
 		turn++;
-		if (!filler || !filler->map || !filler->piece || !filler->piece->todo)
+		if (!filler->map || !filler->piece || !filler->piece->todo)
 			continue ;
 		lst = get_all_abs(filler);
+		fptr = lst;
 		done = 0;
 		while (lst)
 		{
@@ -56,6 +61,14 @@ int	main(int ac, char **av)
 			filler->piece->todo = 0;
 			done = 1;
 			break ;
+		}
+		lst = fptr;
+		while (lst)
+		{
+			fptr = lst;
+			lst = lst->next;
+			free(fptr->content);
+			free(fptr);
 		}
 		if (!done)
 			ft_putstr("0 0\n");

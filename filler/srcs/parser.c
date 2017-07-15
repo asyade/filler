@@ -138,7 +138,7 @@ int		fl_parse(t_filler **filler)
 
 	ret = -1;
 	line = NULL;
-	if (!*filler && !(*filler = ft_memalloc(sizeof(t_filler))))
+	if (!*filler)
 		return (-1);
 	if ((len = get_next_line(0, &line)) <= 0)
 	{
