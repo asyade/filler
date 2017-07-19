@@ -46,5 +46,7 @@ int					has_free_neigbors(t_filler *f, int x, int y);
 int					get_dist(int xa, int ya, int xb, int yb);
 t_absis				*get_abs(t_filler *f, int x, int y);
 t_list				*get_all_abs(t_filler *f);
+void				reset_map(t_filler *fill, int height, int width);
+int					reset_piece(t_filler *filler, int height, int width);
 
 #endif

@@ -1,21 +1,16 @@
-#include "filler.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acorbeau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/17 18:21:20 by acorbeau          #+#    #+#             */
+/*   Updated: 2017/07/17 18:21:48 by acorbeau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void		reset_map(t_filler *fill, int height, int width)
-{
-	if (fill->map)
-	{
-		while (fill->map->height--)
-		{
-			free(fill->map->map[fill->map->height]);
-		}
-		free(fill->map->map);
-	}
-	else if (!(fill->map = ft_memalloc(sizeof(t_map))))
-		return ;
-	fill->map->map = ft_memalloc(sizeof(char *) * height);
-	fill->map->height = height;
-	fill->map->width = width;
-}
+#include "filler.h"
 
 static int	parse_player(t_filler **filler, char *line)
 {
@@ -29,7 +24,6 @@ static int	parse_player(t_filler **filler, char *line)
 	(*filler)->player = (*line++ == '1') ? 'o' : 'x';
 	if (!ft_strnequ(line, " : [", 4))
 		return (-1);
-	fl_log("Player parsed");
 	return (1);
 }
 
@@ -55,7 +49,6 @@ static int	parse_map_cells(t_filler *filler)
 
 static int	parse_map(t_filler *filler, char *line)
 {
-	fl_log("Parsing map...");
 	int	size[2];
 	if (!line || !*line || !ft_strnequ(line, "Plateau ", 8))
 		return (0);
@@ -71,35 +64,7 @@ static int	parse_map(t_filler *filler, char *line)
 	return (parse_map_cells(filler));
 }
 
-int		reset_piece(t_filler *filler, int height, int width)
-{
-	if (filler->piece)
-	{
-		while (--filler->piece->height)
-			free(filler->piece->data[filler->piece->height]);
-		free(filler->piece->data);
-	}
-	else if (!(filler->piece = ft_memalloc(sizeof(t_piece))))
-		return (0);
-	if (!(filler->piece->data = ft_memalloc(sizeof(char *) * height)))
-		return (0);
-	filler->piece->height = height;
-	filler->piece->width = width;
-	filler->piece->todo = 1;
-	return (1);
-}
 
-void		debug_piece(t_piece *piece)
-{
-	int	i;
-	if (!piece)
-		return ;
-	i = 0;
-	while (i < piece->height)
-	{
-		fl_log(piece->data[i++]);
-	}
-}
 
 static int	parse_piece(t_filler *filler, char *line)
 {
@@ -107,7 +72,6 @@ static int	parse_piece(t_filler *filler, char *line)
 	char	*s;
 	int		i;
 
-	fl_log("Parsing piece...");
 	if (!line || !*line || !ft_strnequ(line, "Piece ", 6))
 		return (0);
 	line += 6;
@@ -125,8 +89,6 @@ static int	parse_piece(t_filler *filler, char *line)
 			return (0);
 		filler->piece->data[i] = s;
 	}
-	fl_log("Piece parsed !");
-	debug_piece(filler->piece);
 	return (1);
 }
 
@@ -147,26 +109,11 @@ int		fl_parse(t_filler **filler)
 		return (-1);
 	}
 	if (!(*filler)->nb)
-	{
-		if (parse_player(filler, line))
-			ret = 1;
-		else
-			ret = -1;
-	}
+		ret = (parse_player(filler, line)) ? 1 : -1;
 	else if (ft_strnequ(line, "Plateau ", 8))
-	{
-		if (parse_map(*filler, line))
-			ret = 1;
-		else
-			ret = -1;
-	}
+		ret = (parse_map(*filler, line)) ? 1 : -1;
 	else if (ft_strnequ(line, "Piece ", 6))
-	{
-		if (parse_piece(*filler, line))
-			ret = 1;
-		else
-			ret = -1;
-	}
+		ret = (parse_piece(*filler, line)) ? 1 : -1;
 	ft_strdel(&line);
 	return (ret);
 }
