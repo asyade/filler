@@ -18,7 +18,7 @@ SRC = srcs/abs.c \
 
 OBJ = $(patsubst $(PATH_SRC)/%.c, obj/%.o, $(SRC))
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -g3 -Wall -Wextra -Werror
 
 LIBS = -L./libft -lft
 
@@ -28,7 +28,7 @@ HEADERS = -I includes/
 
 all : $(NAME)
 
-$(NAME) : $(OBJ)
+$(NAME) : $(OBJ) Makefile includes/fillit.h includes/libft.h
 	make -C libft/
 	$(CC) $(FLAGS) $(OBJ) libft/libft.a -o $(NAME) -I includes/
 	echo "\033[33mCreating  \033[32m[✔] \033[0m$(NAME)"

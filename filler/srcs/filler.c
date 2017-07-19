@@ -40,6 +40,12 @@ void		lst_insert_nodoub(t_list **lst, t_list *elem)
 	ft_lstaddfront(lst, elem);
 }
 
+void			del_abs(void *content, size_t size)
+{
+	(void)size;
+	free(content);
+}
+
 int			choose_piece(t_filler *filler, t_list *place, t_chunk **chunks)
 {
 	t_absis	*ab;
@@ -65,7 +71,7 @@ int			choose_piece(t_filler *filler, t_list *place, t_chunk **chunks)
 			}
 		}
 	}
-	ft_lstdel(&place, NULL);
+	ft_lstdel(&place, &del_abs);
 	return (1);
 }
 
@@ -111,7 +117,7 @@ int			main(void)
 			return (1);
 		lst = get_all_abs(filler);
 		done = put_piece(filler, lst, chnks);
-		ft_lstdel(&lst, NULL);
+		ft_lstdel(&lst, &del_abs);
 		if (!done)
 			ft_putstr("0 0\n");
 	}
