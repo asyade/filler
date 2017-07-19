@@ -15,7 +15,8 @@
 
 void	ft_lstdelone(t_list **root, void (*f)(void *, size_t))
 {
-	f((*root)->content, (*root)->content_size);
+	if (f)
+		f((*root)->content, (*root)->content_size);
 	free(*root);
 	*root = NULL;
 }

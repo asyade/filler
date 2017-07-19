@@ -29,7 +29,7 @@ void		reset_map(t_filler *fill, int height, int width)
 	fill->map->width = width;
 }
 
-int		reset_piece(t_filler *filler, int height, int width)
+int			reset_piece(t_filler *filler, int height, int width)
 {
 	if (filler->piece)
 	{

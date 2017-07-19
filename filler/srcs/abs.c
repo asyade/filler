@@ -6,13 +6,25 @@
 /*   By: acorbeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 18:21:20 by acorbeau          #+#    #+#             */
-/*   Updated: 2017/07/17 18:21:48 by acorbeau         ###   ########.fr       */
+/*   Updated: 2017/07/19 13:54:21 by acorbeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-t_absis	*get_abs(t_filler *f, int x, int y)
+static t_absis	*init_abs(int x, int y)
+{
+	t_absis	*ret;
+
+	if (!(ret = malloc(sizeof(t_absis))))
+		return (NULL);
+	ret->a[0] = x;
+	ret->a[1] = y;
+	ret->dist = LIMITS_INT_MAX;
+	return (ret);
+}
+
+t_absis			*get_abs(t_filler *f, int x, int y)
 {
 	t_absis	*ret;
 	int		px;
@@ -20,11 +32,8 @@ t_absis	*get_abs(t_filler *f, int x, int y)
 	int		dst;
 
 	py = -1;
-	if (!(ret = malloc(sizeof(t_absis))))
+	if (!(ret = init_abs(x, y)))
 		return (NULL);
-	ret->dist = LIMITS_INT_MAX;
-	ret->a[0] = x;
-	ret->a[1] = y;
 	while (++py < f->map->height)
 	{
 		px = -1;
@@ -42,7 +51,7 @@ ft_tolower(f->map->map[py][px]) == ft_tolower(f->player) ||
 	return (ret);
 }
 
-t_list	*get_all_abs(t_filler *f)
+t_list			*get_all_abs(t_filler *f)
 {
 	int		x;
 	int		y;
@@ -54,9 +63,10 @@ t_list	*get_all_abs(t_filler *f)
 	while (++y < f->map->height)
 	{
 		x = -1;
-		while(++x < f->map->width)
+		while (++x < f->map->width)
 		{
-			if (ft_tolower(f->map->map[y][x]) == f->player && has_free_neigbors(f, x, y))
+			if (ft_tolower(f->map->map[y][x]) == f->player &&
+has_free_neigbors(f, x, y))
 			{
 				new = ft_lstcreate(get_abs(f, x, y), sizeof(t_absis *));
 				ft_lstpushsort(&ret, new, &cmp_dist);

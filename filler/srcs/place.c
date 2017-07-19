@@ -6,13 +6,13 @@
 /*   By: acorbeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 18:22:15 by acorbeau          #+#    #+#             */
-/*   Updated: 2017/07/17 18:22:26 by acorbeau         ###   ########.fr       */
+/*   Updated: 2017/07/19 14:57:20 by acorbeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int	is_player(t_filler *filler, char c)
+int		is_player(t_filler *filler, char c)
 {
 	c = ft_tolower(c);
 	if (c == filler->player)
@@ -22,7 +22,7 @@ int	is_player(t_filler *filler, char c)
 	return (-1);
 }
 
-int	can_put(t_filler *filler, int x, int y)
+int		can_put(t_filler *filler, int x, int y)
 {
 	int	i;
 	int	j;
@@ -37,19 +37,30 @@ int	can_put(t_filler *filler, int x, int y)
 		{
 			if (filler->piece->data[i][j] == '.')
 				continue ;
-			if (x + j >= filler->map->width || y + i >= filler->map->height || y + i < 0 || x + j < 0)
+			if (x + j >= filler->map->width ||
+y + i >= filler->map->height || y + i < 0 || x + j < 0)
 				return (0);
 			if (is_player(filler, filler->map->map[i + y][j + x]) == 1)
 				col++;
-			if (col > 1)
-				return (0);
-			else if (is_player(filler, filler->map->map[i + y][j + x]) == -1 || col > 1)
+			else if (col > 1 ||
+is_player(filler, filler->map->map[i + y][j + x]) == -1 || col > 1)
 				return (0);
 		}
 	}
 	return (col == 1 ? 1 : 0);
 }
 
+t_absis	*instanciate_abs(int x, int y)
+{
+	t_absis	*ret;
+
+	if (!(ret = malloc(sizeof(t_absis))))
+		return (NULL);
+	ret->a[0] = x;
+	ret->a[1] = y;
+	ret->dist = LIMITS_INT_MAX;
+	return (ret);
+}
 
 t_list	*get_pos_abs(t_filler *filler, int x, int y)
 {
@@ -58,11 +69,8 @@ t_list	*get_pos_abs(t_filler *filler, int x, int y)
 	int		pcx;
 	int		pcy;
 
-	if (!(ret = malloc(sizeof(t_absis))))
+	if (!(ret = instanciate_abs(x, y)))
 		return (NULL);
-	ret->a[0] = x;
-	ret->a[1] = y;
-	ret->dist = LIMITS_INT_MAX;
 	pcy = -1;
 	while (++pcy < filler->piece->height)
 	{
@@ -97,7 +105,8 @@ t_list	*get_positions(t_filler *filler, int x, int y)
 		while ((px - x) < filler->piece->width * 2)
 		{
 			if (can_put(filler, px, py))
-					ft_lstpushsort(&ret, get_pos_abs(filler, px, py), &cmp_dist);
+				ft_lstpushsort(&ret, get_pos_abs(filler, px, py),
+&cmp_dist);
 			px++;
 		}
 		py++;

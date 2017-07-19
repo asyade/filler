@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   abs.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acorbeau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/17 18:21:20 by acorbeau          #+#    #+#             */
+/*   Updated: 2017/07/19 13:54:21 by acorbeau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FILLER_H
 # define FILLER_H
 
@@ -46,11 +58,13 @@ typedef struct		s_chunk
 	int		width;
 	int		height;
 	int		weight;
-}			t_chunk;
+}					t_chunk;
 
-int		chunk_check_col(t_filler *filler, t_chunk *chunk, int x, int y);
-void		update_chunk(t_map *map, t_chunk **chunks);
-t_chunk		**get_chunks(t_map *map);
+void				free_filler(t_filler *filler);
+void				get_min(t_chunk **chunks, int c);
+int					chunk_check_col(t_filler *f, t_chunk *c, int x, int y);
+void				update_chunk(t_map *map, t_chunk **chunks);
+t_chunk				**get_chunks(t_map *map);
 
 int					fl_parse(t_filler **filler);
 void				fl_log(char *str);

@@ -6,7 +6,7 @@
 /*   By: acorbeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 18:21:20 by acorbeau          #+#    #+#             */
-/*   Updated: 2017/07/17 18:21:48 by acorbeau         ###   ########.fr       */
+/*   Updated: 2017/07/19 14:08:40 by acorbeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	parse_player(t_filler **filler, char *line)
 static int	parse_map_cells(t_filler *filler)
 {
 	char	*line;
-	int	i;
+	int		i;
 
 	line = NULL;
 	if (get_next_line(0, &line) <= 0)
@@ -50,6 +50,7 @@ static int	parse_map_cells(t_filler *filler)
 static int	parse_map(t_filler *filler, char *line)
 {
 	int	size[2];
+
 	if (!line || !*line || !ft_strnequ(line, "Plateau ", 8))
 		return (0);
 	line += 8;
@@ -64,11 +65,9 @@ static int	parse_map(t_filler *filler, char *line)
 	return (parse_map_cells(filler));
 }
 
-
-
 static int	parse_piece(t_filler *filler, char *line)
 {
-	int	size[2];
+	int		size[2];
 	char	*s;
 	int		i;
 
@@ -92,7 +91,7 @@ static int	parse_piece(t_filler *filler, char *line)
 	return (1);
 }
 
-int		fl_parse(t_filler **filler)
+int			fl_parse(t_filler **filler)
 {
 	int		len;
 	char	*line;
