@@ -7,6 +7,8 @@
 # define LIMITS_INT_MAX 2147483647
 # define LIMITS_INT_MIN -2147483648
 
+# define NB_CHUNK 4
+
 typedef struct		s_piece
 {
 	int				todo;
@@ -36,6 +38,19 @@ typedef struct		s_filler
 	t_map			*map;
 	t_piece			*piece;
 }					t_filler;
+
+typedef struct		s_chunk
+{
+	int		x;
+	int		y;
+	int		width;
+	int		height;
+	int		weight;
+}			t_chunk;
+
+int		chunk_check_col(t_filler *filler, t_chunk *chunk, int x, int y);
+void		update_chunk(t_map *map, t_chunk **chunks);
+t_chunk		**get_chunks(t_map *map);
 
 int					fl_parse(t_filler **filler);
 void				fl_log(char *str);
