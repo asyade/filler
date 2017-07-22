@@ -14,7 +14,6 @@
 
 static int	parse_player(t_filler **filler, char *line)
 {
-	fl_log(line);
 	if (!ft_strnequ(line, "$$$ exec p", 10))
 		return (0);
 	line += 10;
@@ -88,6 +87,7 @@ static int	parse_piece(t_filler *filler, char *line)
 			return (0);
 		filler->piece->data[i] = s;
 	}
+
 	return (1);
 }
 
@@ -103,8 +103,7 @@ int			fl_parse(t_filler **filler)
 		return (-1);
 	if ((len = get_next_line(0, &line)) <= 0)
 	{
-		free(*filler);
-		*filler = NULL;
+		ft_strdel(&line);
 		return (-1);
 	}
 	if (!(*filler)->nb)

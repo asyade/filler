@@ -39,6 +39,7 @@ void				ft_perror(char *str, int flags);
 void				ft_errset(char *name);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memset(void *s, int c, size_t n);
+void				*ft_salloc(size_t size);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
 void				*ft_memccpy(void *dest, const void *src, int c, size_t n);
 void				ft_putwstr(wchar_t const *s);
@@ -122,6 +123,7 @@ char				**ft_strsplit(char const *s, char c);
 
 t_list				*ft_lstnew(void const *content, size_t content_size);
 t_list				*ft_lstcreate(void *content, size_t content_size);
+t_list				*ft_xlstcreate(void *content, size_t content_size, int ref);
 void				ft_lstdelone(t_list **root, void (*f)(void *, size_t));
 void				ft_lstdel(t_list **root, void (*f)(void *, size_t));
 void				ft_lstadd(t_list **root, t_list *item);

@@ -1,0 +1,5 @@
+a=$1;
+while [ $a != 0 ];do
+	$2;
+	cat filler.trace;
+done

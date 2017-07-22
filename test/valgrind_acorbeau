@@ -1,0 +1,1 @@
+make -C ../filler; valgrind --leak-check=full ../filler/acorbeau.filler < $1

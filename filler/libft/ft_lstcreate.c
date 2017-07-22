@@ -18,7 +18,7 @@ t_list	*ft_lstcreate(void *content, size_t content_size)
 {
 	t_list	*lptr;
 
-	lptr = malloc(sizeof(t_list));
+	lptr = ft_salloc(sizeof(t_list));
 	lptr->content = content;
 	lptr->next = NULL;
 	lptr->content_size = content_size;

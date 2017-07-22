@@ -42,8 +42,7 @@ y + i >= filler->map->height || y + i < 0 || x + j < 0)
 				return (0);
 			if (is_player(filler, filler->map->map[i + y][j + x]) == 1)
 				col++;
-			else if (col > 1 ||
-is_player(filler, filler->map->map[i + y][j + x]) == -1 || col > 1)
+			else if (is_player(filler, filler->map->map[i + y][j + x]) == -1)
 				return (0);
 		}
 	}
@@ -54,7 +53,7 @@ t_absis	*instanciate_abs(int x, int y)
 {
 	t_absis	*ret;
 
-	if (!(ret = malloc(sizeof(t_absis))))
+	if (!(ret = ft_xalloc(sizeof(t_absis), 1)))
 		return (NULL);
 	ret->a[0] = x;
 	ret->a[1] = y;
@@ -80,15 +79,12 @@ t_list	*get_pos_abs(t_filler *filler, int x, int y)
 			if (filler->piece->data[pcy][pcx] == '.')
 				continue ;
 			tmp = get_abs(filler, x + pcx, y + pcy);
-			if (tmp->dist > ret->dist)
-				continue ;
-			ret->dist = tmp->dist;
+			ret->dist += tmp->dist;
 			ret->b[0] = tmp->b[0];
 			ret->b[1] = tmp->b[1];
-			free(tmp);
 		}
 	}
-	return (ft_lstcreate(ret, sizeof(t_absis *)));
+	return (ft_xlstcreate(ret, sizeof(t_absis *), 1));
 }
 
 t_list	*get_positions(t_filler *filler, int x, int y)

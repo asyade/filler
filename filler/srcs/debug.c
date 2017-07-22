@@ -20,7 +20,7 @@ void	fl_log(char *str)
 
 void	free_filler(t_filler *filler)
 {
-	if (!filler)
+	/*if (!filler)
 		return ;
 	if (filler->map)
 	{
@@ -37,4 +37,6 @@ void	free_filler(t_filler *filler)
 		free(filler->piece);
 	}
 	free(filler);
+	*/
+	(void)filler;
 }

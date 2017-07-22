@@ -16,7 +16,7 @@ static t_absis	*init_abs(int x, int y)
 {
 	t_absis	*ret;
 
-	if (!(ret = malloc(sizeof(t_absis))))
+	if (!(ret = ft_xalloc(sizeof(t_absis), 1)))
 		return (NULL);
 	ret->a[0] = x;
 	ret->a[1] = y;
@@ -43,7 +43,7 @@ t_absis			*get_abs(t_filler *f, int x, int y)
 ft_tolower(f->map->map[py][px]) == ft_tolower(f->player) ||
 !has_free_neigbors(f, px, py) || ret->dist < (dst = get_dist(x, y, px, py)))
 				continue ;
-			ret->dist = dst;
+			ret->dist += dst;
 			ret->b[0] = px;
 			ret->b[1] = py;
 		}
@@ -68,7 +68,7 @@ t_list			*get_all_abs(t_filler *f)
 			if (ft_tolower(f->map->map[y][x]) == f->player &&
 has_free_neigbors(f, x, y))
 			{
-				new = ft_lstcreate(get_abs(f, x, y), sizeof(t_absis *));
+				new = ft_xlstcreate(get_abs(f, x, y), sizeof(t_absis *), 1);
 				ft_lstpushsort(&ret, new, &cmp_dist);
 			}
 		}

@@ -14,32 +14,26 @@
 
 void		reset_map(t_filler *fill, int height, int width)
 {
-	if (fill->map)
+	if (fill->map && fill->map->map)
 	{
 		while (fill->map->height--)
-		{
 			free(fill->map->map[fill->map->height]);
-		}
-		free(fill->map->map);
 	}
-	else if (!(fill->map = ft_memalloc(sizeof(t_map))))
-		return ;
-	fill->map->map = ft_memalloc(sizeof(char *) * height);
+	ft_xclear(4);
+	fill->map->map = ft_xcalloc(sizeof(char *) * height, 4);
 	fill->map->height = height;
 	fill->map->width = width;
 }
 
 int			reset_piece(t_filler *filler, int height, int width)
 {
-	if (filler->piece)
+	if (filler->piece && filler->piece->data)
 	{
-		while (--filler->piece->height)
+		while (filler->piece->height--)
 			free(filler->piece->data[filler->piece->height]);
-		free(filler->piece->data);
 	}
-	else if (!(filler->piece = ft_memalloc(sizeof(t_piece))))
-		return (0);
-	if (!(filler->piece->data = ft_memalloc(sizeof(char *) * height)))
+	ft_xclear(3);
+	if (!(filler->piece->data = ft_xcalloc(sizeof(char *) * height, 3)))
 		return (0);
 	filler->piece->height = height;
 	filler->piece->width = width;

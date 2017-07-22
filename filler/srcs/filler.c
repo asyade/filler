@@ -40,38 +40,16 @@ void		lst_insert_nodoub(t_list **lst, t_list *elem)
 	ft_lstaddfront(lst, elem);
 }
 
-void			del_abs(void *content, size_t size)
-{
-	(void)size;
-	free(content);
-}
-
 int			choose_piece(t_filler *filler, t_list *place, t_chunk **chunks)
 {
 	t_absis	*ab;
-	t_list	*tmp;
-	int		i;
 
+	(void)chunks;
 	if (!place)
 		return (0);
-	i = -1;
-	while (++i < NB_CHUNK)
-	{
-		tmp = place;
-		while (tmp)
-		{
-			ab = (t_absis *)tmp->content;
-			tmp = tmp->next;
-			if (chunk_check_col(filler, chunks[i], ab->a[0], ab->a[1]))
-			{
-				put_pos(ab->a[1], ab->a[0]);
-				filler->piece->todo = 0;
-				i = 4;
-				break ;
-			}
-		}
-	}
-	ft_lstdel(&place, &del_abs);
+	ab = (t_absis *)place->content;
+	put_pos(ab->a[1], ab->a[0]);
+	filler->piece->todo = 0;
 	return (1);
 }
 
@@ -79,12 +57,9 @@ int			put_piece(t_filler *filler, t_list *lst, t_chunk **chunks)
 {
 	t_absis	*bs;
 	t_list	*pos;
-	t_list	*root;
 	t_list	*avaible;
 
 	avaible = NULL;
-	update_chunk(filler->map, chunks);
-	root = lst;
 	while (lst)
 	{
 		bs = (t_absis *)lst->content;
@@ -93,9 +68,8 @@ int			put_piece(t_filler *filler, t_list *lst, t_chunk **chunks)
 		if (!pos)
 			continue ;
 		bs = (t_absis *)pos->content;
-		lst_insert_nodoub(&avaible, ft_lstcreate(bs, sizeof(t_absis *)));
+		lst_insert_nodoub(&avaible, ft_xlstcreate(bs, sizeof(t_absis), 1));
 	}
-	lst = root;
 	return (choose_piece(filler, avaible, chunks));
 }
 
@@ -107,19 +81,19 @@ int			main(void)
 	t_chunk			**chnks;
 
 	filler = NULL;
-	filler = ft_memalloc(sizeof(t_filler));
+	filler = ft_xcalloc(sizeof(t_filler), 2);
+	filler->map = ft_xcalloc(sizeof(t_map), 2);
+	filler->piece = ft_xcalloc(sizeof(t_piece), 2);
 	chnks = NULL;
 	while (fl_parse(&filler) > 0)
 	{
 		if (!filler->map || !filler->piece || !filler->piece->todo)
 			continue ;
-		if (!chnks && !(chnks = get_chunks(filler->map)))
-			return (1);
 		lst = get_all_abs(filler);
 		done = put_piece(filler, lst, chnks);
-		ft_lstdel(&lst, &del_abs);
 		if (!done)
 			ft_putstr("0 0\n");
+		ft_xclear(1);
 	}
-	free_filler(filler);
+	ft_xclear(2);
 }

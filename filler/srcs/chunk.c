@@ -37,7 +37,7 @@ void			chunk_iter(t_map *map, t_chunk *chunk)
 		x = chunk->x - 1;
 		while (++x < chunk->width + chunk->x)
 		{
-			if (map->map[y][x] != '.')
+			if (map->map[y][x] == '.')// a voire
 				chunk->weight++;
 		}
 	}

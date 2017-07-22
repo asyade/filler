@@ -21,6 +21,27 @@
 
 # define NB_CHUNK 4
 
+
+# define XMAP_MAX 32
+# define XMAP_SIZE 4094
+
+# define XGET      0
+# define XCREATE   1
+# define XEXTENDE  2
+# define XFREE	   3
+# define XDEFRAG   4
+
+# define XF_NONE     0
+# define XF_OCCUPIED 1
+
+typedef	struct	s_xmap
+{
+	void		**map;
+	int			flags;
+	size_t		ptr;
+	size_t		size;
+}				t_xmap;
+
 typedef struct		s_piece
 {
 	int				todo;
@@ -34,6 +55,7 @@ typedef struct		s_absis
 	int				a[2];
 	int				b[2];
 	int				dist;
+	int				width[NB_CHUNK];
 }					t_absis;
 
 typedef struct		s_map
@@ -60,8 +82,16 @@ typedef struct		s_chunk
 	int		weight;
 }					t_chunk;
 
+void				*ft_xalloc(size_t size, int ref);
+void				*ft_xcalloc(size_t size, int ref);
+void				ft_xfree(void *ptr, int ref);
+void				ft_xclear(int ref);
+t_xmap				*ft_xmap(int ref, int mode);
+t_list				*ft_xlstnew(void *content, size_t content_size, int ref);
+
 void				free_filler(t_filler *filler);
 void				get_min(t_chunk **chunks, int c);
+void				chunk_update_abs_width(t_filler *f, t_chunk **ch, t_absis *ab);
 int					chunk_check_col(t_filler *f, t_chunk *c, int x, int y);
 void				update_chunk(t_map *map, t_chunk **chunks);
 t_chunk				**get_chunks(t_map *map);
