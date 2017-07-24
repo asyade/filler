@@ -47,6 +47,7 @@ void			get_min(t_chunk **chunks, int c)
 	t_chunk	*tmp;
 
 	min = LIMITS_INT_MAX;
+	i = 0;
 	while (c--)
 	{
 		if (!(chunks[c]->weight < min))

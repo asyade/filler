@@ -20,7 +20,7 @@ SRC = srcs/abs.c \
 
 OBJ = $(patsubst $(PATH_SRC)/%.c, obj/%.o, $(SRC))
 
-FLAGS = -g3 -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 LIBS = -L./libft -lft
 
