@@ -23,6 +23,8 @@ void		reset_map(t_filler *fill, int height, int width)
 	fill->map->map = ft_xcalloc(sizeof(char *) * height, 4);
 	fill->map->height = height;
 	fill->map->width = width;
+	fill->map->ennemies = NULL;
+	fill->map->allies = NULL;
 }
 
 int			reset_piece(t_filler *filler, int height, int width)

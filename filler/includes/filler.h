@@ -19,11 +19,19 @@
 # define LIMITS_INT_MAX 2147483647
 # define LIMITS_INT_MIN -2147483648
 
-# define NB_CHUNK 4
+# define X_MAX(a, b) ((a > b) ? a : b)
+# define X_MIN(a, b) ((a < b) ? a : b)
 
+# define NB_CHUNK 4
 
 # define XMAP_MAX 32
 # define XMAP_SIZE 4094
+
+# define PGET_X(i) ((int)((((long)i) & 0xffff0000) >> 16))
+# define PGET_Y(i) ((int)(((long)i) & 0x0000ffff))
+
+# define PSET_X(i, n) ((long)((i & 0x0000ffff) | (n << 16)))
+# define PSET_Y(i, n) ((long)((((long)PGET_X(i)) << 16) | n))
 
 # define XGET      0
 # define XCREATE   1
@@ -34,20 +42,22 @@
 # define XF_NONE     0
 # define XF_OCCUPIED 1
 
-typedef	struct	s_xmap
+typedef	struct		s_xmap
 {
-	void		**map;
-	int			flags;
-	size_t		ptr;
-	size_t		size;
-}				t_xmap;
+	void			**map;
+	int				flags;
+	size_t			ptr;
+	size_t			size;
+}					t_xmap;
 
 typedef struct		s_piece
 {
 	int				todo;
 	int				height;
 	int				width;
+	int				max[2];
 	char			**data;
+	t_list			*node;
 }					t_piece;
 
 typedef struct		s_absis
@@ -61,6 +71,10 @@ typedef struct		s_absis
 typedef struct		s_map
 {
 	char			**map;
+	long			*ennemies;
+	long			*allies;
+	int				acount;
+	int				ecount;
 	int				width;
 	int				height;
 }					t_map;
