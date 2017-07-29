@@ -1,0 +1,15 @@
+echo "\033[0;31m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+echo "~~~   acorbeau vs acorbeau map00         ~~~~";
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\033[0m";
+./fight.sh 5 ./maps/map00 filler/acorbeau.filler filler/acorbeau.filler -q
+
+echo "\033[0;31m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+echo "~~~   acorbeau vs acorbeau map01         ~~~~";
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\033[0m";
+./fight.sh 5 ./maps/map01 filler/acorbeau.filler filler/acorbeau.filler -q
+
+echo "\033[0;31m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+echo "~~~   acorbeau vs acorbeau map02        ~~~~";
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\033[0m";
+./fight.sh 5 ./maps/map02 filler/acorbeau.filler filler/acorbeau.filler -q
+

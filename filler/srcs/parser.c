@@ -152,8 +152,8 @@ void		parse_piece_node(t_piece *piece)//TODO derniére opti gérer le min comme 
 	y = -1;
 	piece->max[0] = 1;
 	piece->max[1] = 1;
-	piece->min[0] = piece->width + 1;
-	piece->min[1] = piece->width + 1;
+	piece->min[0] = piece->width;
+	piece->min[1] = piece->width;
 	while (++y < piece->height)
 	{
 		x = -1;
@@ -164,8 +164,8 @@ void		parse_piece_node(t_piece *piece)//TODO derniére opti gérer le min comme 
 			ft_lstadd(&ret, ft_xlstcreate(new_xpoint(x, y, 3), sizeof(int) * 2, 3));
 			piece->max[0] = X_MAX(x + 1, piece->max[0]);
 			piece->max[1] = X_MAX(y + 1, piece->max[1]);
-			piece->min[0] = X_MIN(x + 1, piece->min[0]);
-			piece->min[1] = X_MIN(y + 1, piece->min[1]);
+			piece->min[0] = X_MIN(x, piece->min[0]);
+			piece->min[1] = X_MIN(y, piece->min[1]);
 		}
 	}
 	piece->node = ret;
