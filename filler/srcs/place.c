@@ -96,10 +96,10 @@ t_list	*get_positions(t_filler *filler, int x, int y)
 
 	ret = NULL;
 	py = y - filler->piece->max[1];
-	while ((py - y) < filler->piece->max[1] * 2)
+	while ((py - y) < 1)
 	{
 		px = x - filler->piece->max[0];
-		while ((px - x) < filler->piece->max[0] * 2)
+		while ((px - x) < 1)
 		{
 			if (can_put(filler, px, py))
 				ft_lstpushsort(&ret, get_pos_abs(filler, px, py), &cmp_dist);

@@ -56,6 +56,7 @@ typedef struct		s_piece
 	int				height;
 	int				width;
 	int				max[2];
+	int				min[2];
 	char			**data;
 	t_list			*node;
 }					t_piece;
